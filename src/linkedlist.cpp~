@@ -1,0 +1,67 @@
+#include "linkedlist.h"
+
+/**
+ *@brief constructs an LLNode with data = val, passed by reference;
+ *@parameter T* val -- the data for the node.
+ **/
+template <class T>
+LLNode<T>::LLNode(T* val)
+{
+  this->data = val;
+  this->next = nullptr;
+}
+
+/**
+ *@brief constructs an LLNode with data = val;
+ *@parameter T* val -- the data for the node.
+ *@parameter LLNode* next -- the node that this one should point to.
+ **/
+template <class T>
+LLNode<T>::LLNode(T* val, LLNode* next)
+{
+  this->data = val;
+  this->next = next;
+}
+
+/**
+ *@brief Destructs an LLNode; Does not delete the data from the node.
+ **/
+//template <class T>
+//LLNode<T>::~LLNode()
+//{
+//}
+/**
+ *@brief Inserts a new node with data val, after the current node.
+ *@parameter T* val -- the value of the new node.
+ **/
+template <class T>
+void LLNode<T>::insert(T* val)
+{
+  /// Might fail if null. I don't think so.
+  LLNode* newNode = new LLNode(val, this->next);
+  this->next = newNode;
+}
+/**
+ *@brief Deletes the node after this node
+ *  links this to the new next.
+ **/
+template <class T>
+void LLNode<T>::delete_next()
+{
+  if(!this->next) return;
+  LLNode<T>* temp;
+  temp = this->next;
+  if(this->next->next) this->next = this->next->next;
+  else this->next = nullptr;
+  delete temp;
+}
+/**
+ *@brief Returns the data in this node.
+ **/
+template <class T>
+T* LLNode<T>::peek()
+{
+  return data;
+}
+
+

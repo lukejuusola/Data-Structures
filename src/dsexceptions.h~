@@ -1,0 +1,4 @@
+#include <exception>
+
+class EmptyPopException : public std::exception {};
+class NotFoundException : public std::exception {};
