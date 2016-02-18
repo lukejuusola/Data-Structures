@@ -1,7 +1,6 @@
 #ifndef _LINKEDLIST
 #define _LINKEDLIST
 
-
 /**
  *@brief a node of a singly-linked list containing data of type T
  **/
@@ -16,7 +15,6 @@ class LLNode
   void delete_next();
   T* peek();
   
- protected:
   T* data;
   LLNode<T>* next;
 };
@@ -41,10 +39,11 @@ class LinkedList
   //delete by index
   //T* delete(int index);
   int find(T* val);
-  bool isEmpty();
+  bool is_empty();
   T* operator[](int index);
- protected:
+
   LLNode<T>* root;
 };
 
+#include "linkedlist.cpp"
 #endif

@@ -1,5 +1,9 @@
+#ifndef _LINKEDLISTCPP
+#define _LINKEDLISTCPP
+
 #include "linkedlist.h"
 #include "dsexceptions.h"
+#include <iostream>
 
 /**
  *@brief constructs an LLNode with data = val, passed by reference;
@@ -79,7 +83,7 @@ LinkedList<T>::LinkedList()
 template <class T>
 LinkedList<T>::~LinkedList()
 {
-  while(!this->isEmpty())
+  while(!this->is_empty())
     {
       this->pop_front();
     }
@@ -105,7 +109,11 @@ template <class T>
 void LinkedList<T>::push_back(T* val)
 {
   LLNode<T>* cur = this->root, *newNode = new LLNode<T>(val);
-  if(!cur) cur = newNode;
+  if(!cur) 
+    {
+      this->root = newNode;
+      return;
+    }
   while(cur->next)
     {
       cur = cur->next;
@@ -186,7 +194,7 @@ int LinkedList<T>::find(T* val)
  *@return bool for truth
  **/
 template <class T>
-bool LinkedList<T>::isEmpty()
+bool LinkedList<T>::is_empty()
 {
   return this->root == nullptr;
 }
@@ -211,3 +219,4 @@ T* LinkedList<T>::operator[](int index)
   return cur->data;
 }
 
+#endif

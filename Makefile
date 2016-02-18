@@ -5,15 +5,28 @@ DOCDIR = doc
 
 CC = g++ 
 DOCGEN = doxygen
-CPPFLAGS = -c -std=c++11 -Wall -g
+
+TESTFLAGS = -c --std=c++11 -Wall -g
+MODFLAGS = -fPIC -g -c --std=c++11 -Wall
+LIBFLAGS = -shared
+
+LOCS = -Lobj
+
+LIB =libdatastructs
+LIBNAME = $(OBJDIR)/libdatastructs.so
 DOCGENFLAGS =
 COMMON_SRCS =
+MODULEOBJS = linkedlist.o
+MODSNDIR = $(OBJDIR)/linkedlist.o
 
-linkedlist :
-	$(CC) $(CPPFLAGS) -o $(OBJDIR)/linkedlist.o $(SRCDIR)/linkedlist.cpp
-linkedlist-test:
-	$(CC) $(CPPFLAGS) -o $(OBJDIR)/linkedlist_test.o $(SRCDIR)/linkedlist_test.cpp
-	$(CC) $(CPPFLAGS) -o $(BINDIR)/linkedlist_test $(OBJDIR)/linkedlist_test.o
+BYE=$(CC) $(TESTFLAGS) -o $(OBJDIR)/linkedlist_test.o $(SRCDIR)/linkedlist_test.cpp
+
+linkedlist.o :
+	$(CC) $(MODFLAGS) -o $(OBJDIR)/linkedlist.o $(SRCDIR)/linkedlist.cpp
+linkedlist-test: library
+	$(CC) $(LOCS) --std=c++11 -o  $(BINDIR)/linkedlist_test $(SRCDIR)/linkedlist_test.cpp -ldatastructs
+library: linkedlist.o
+	$(CC) $(LIBFLAGS) -o $(LIBNAME) $(MODSNDIR)
 docs: 
 	doxygen Doxyfile
 clean-docs:
@@ -22,10 +35,6 @@ clean-docs:
 clean:
 	rm $(OBJDIR)/*
 	rm $(BINDIR)/*
-clean-all:
-	rm -r doc/
-	mkdir doc/
-	rm $(OBJDIR)/*
-	rm $(BINDIR)/*
 	rm *~
 	rm $(SRCDIR)/*~
+clean-all: clean-docs clean
